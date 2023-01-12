@@ -1,36 +1,41 @@
-function findRotationCount(arr, val) {
-	let leftIdx = 0;
-	let rightIdx = arr.length - 1;
-	let middleIdx = Math.floor(leftIdx + rightIdx / 2);
+function findRotationCount(arr, leftIdx = 0, rightIdx = arr.length - 1) {
+	// use linear search to solve first
+	// let min = arr[0];
+	// let minIndex = 0;
+	// for (let i = 0; i < arr.length; i++) {
+	// 	if (arr[i] < min) {
+	// 		min = arr[i];
+	// 		minIndex = i;
+	// 	}
+	// }
+	// return minIndex;
+
+	while (leftIdx <= rightIdx) {
+		let middleIdx = Math.floor((leftIdx + rightIdx) / 2);
+		// take previous element. Can't be less than 0
+		let previousIdx = middleIdx - 1;
+		if (previousIdx < 0) return 0;
+		// take index of next element. Can't be greater than arr.length-1
+		let nextIdx = middleIdx + 1;
+		if (nextIdx > arr.length + 1) return 0;
+
+		// if min is last number, return index of last number
+		if (arr[rightIdx] < arr[rightIdx - 1]) return rightIdx;
+
+		// if previous element is greater than middle element and next element is less than middle element, you found the min. Return the index of the previous element
+
+		if (arr[previousIdx] > arr[middleIdx]) {
+			return middleIdx;
+		}
+		else if (arr[previousIdx] < arr[middleIdx] && arr[middleIdx] < arr[nextIdx]) {
+			// if previous is less than and next is greater than, ignore.
+			return findRotationCount(arr, leftIdx, middleIdx - 1);
+		}
+		else {
+			// if previous is less than and next is greater than, ignore.
+			return findRotationCount(arr, middleIdx + 1, rightIdx);
+		}
+	}
 }
-
-// Write a function called findRotationCount which accepts an array of distinct numbers sorted in increasing order. The array has been rotated counter-clockwise n number of times. Given such an array, find the value of n.
-
-// I....genuinely have no idea what this is even asking.
-
-// Solution:
-// function findRotationCount(arr, low = 0, high = arr.length - 1) {
-//     if (high < low) return 0;
-//     if (high === low) return low;
-//     let mid = Math.floor((low + high) / 2)
-
-//     // Check if element (mid+1) is minimum element.
-//     // Consider the cases like [3, 4, 5, 1, 2]
-//     if (mid < high && arr[mid + 1] < arr[mid])
-//       return mid + 1;
-
-//     // Check if mid itself is minimum element
-//     if (mid > low && arr[mid] < arr[mid - 1]) {
-//       return mid;
-//     }
-
-//     // Decide whether we need to go to left half or
-//     // right half
-//     if (arr[high] > arr[mid]) {
-//       return findRotationCount(arr, low, mid - 1);
-//     }
-
-//     return findRotationCount(arr, mid + 1, high);
-//   }
 
 module.exports = findRotationCount;

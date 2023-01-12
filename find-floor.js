@@ -5,7 +5,7 @@ function findFloor(arr, val, leftIdx = 0, rightIdx = arr.length - 1) {
 		if (val >= arr[rightIdx]) return arr[rightIdx];
 
 		let middleIdx = Math.floor((leftIdx + rightIdx) / 2);
-		console.log('leftIdx', leftIdx, 'middleIdx', middleIdx, 'rightIdx', rightIdx, 'arr[middleIdx]', arr[middleIdx]);
+
 		if (val === arr[middleIdx]) return arr[middleIdx];
 		// if middle index >0 AND value to the left of middle index <= val AND val < value at the middle of the array
 		if (middleIdx > 0 && arr[middleIdx - 1] <= val && val < arr[middleIdx]) {
